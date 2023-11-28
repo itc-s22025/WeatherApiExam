@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "jp.ac.it_college.std.s22025.weather_api_exam"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "jp.ac.it_college.std.s22025.weather_api_exam"
         minSdk = 29
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
