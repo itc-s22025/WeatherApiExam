@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">イグザム</string>
     <string name="tv_winfo_title">天気詳細</string>
+    <string name="bt_search">現在地から取得</string>
     <string name="tv_telop">%1$sの天気</string>
-    <string name="tv_desc">現在は%1$sです。\n緯度は%2$.3f度で経度は%3$.3f度です。</string>
+    <string name="tv_desc">現在は%1$sです。</string>
     <string name="tv_more">
         気温は%1$.2f度で、体感気温は%2$.2f度です。\n気圧は%3$.1fPa,、湿度は%4.2fです。\n風速は%5$.2fm/sで、風向は%6$o度方向から吹いています。
     </string>

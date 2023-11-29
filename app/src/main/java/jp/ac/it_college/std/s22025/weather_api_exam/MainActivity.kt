@@ -73,12 +73,7 @@ class MainActivity : AppCompatActivity() {
             // 取得したデータを UI に反映
             result.run {
                 binding.tvWeatherTelop.text = getString(R.string.tv_telop, cityName)
-                binding.tvWeatherDesc.text = getString(
-                    R.string.tv_desc,
-                    weather[0].description,
-                    coordinates.longitude,
-                    coordinates.latitude
-                )
+                binding.tvWeatherDesc.text = getString(R.string.tv_desc, weather[0].description)
                 binding.tvWetherMore.text = getString(
                     R.string.tv_more,
                     mainContents.temperature -273,
