@@ -58,7 +58,7 @@ data class MainContents(
     @SerialName("temp_max") val tempMax: Double,
 
     //気圧
-    val pressure: Double,
+    val pressure: Int,
 
     //湿度
     val humidity: Double
