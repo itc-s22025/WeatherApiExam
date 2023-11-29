@@ -17,6 +17,9 @@ data class WhetherInfo (
     //風情報
     val wind: Wind,
 
+    //都市ID
+    @SerialName("id") val cityId: Int,
+
     //都市名
     @SerialName("name") val cityName: String,
 )
@@ -68,6 +71,6 @@ data class Wind(
     val speed: Double,
 
     //風向
-    @SerialName("deg") val windDegrees: Double
+    @SerialName("deg") val windDegrees: Int
 
 )

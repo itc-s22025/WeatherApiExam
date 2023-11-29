@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val WEATHER_INFO_URL =
             "https://api.openweathermap.org/data/2.5/weather?lang=ja"
+        private const val IMAGE_URL = "http://openweathermap.org/img/w/"
+        private const val IMAGE_FORMAT = ".png"
         private const val APP_ID = BuildConfig.APP_ID
     }
 
@@ -62,9 +64,10 @@ class MainActivity : AppCompatActivity() {
     private fun getWeatherInfo(q: String){
         lifecycleScope.launch {
             //データ取得
-            val url = "$WEATHER_INFO_URL&q=$q&appid=$APP_ID"
+            val site_url = "$WEATHER_INFO_URL&q=$q&appid=$APP_ID"
+//            val image_url = "$IMAGE_URL$IMAGE_FORMAT"
             val result = ktorClient.get {
-                url(url)
+                url(site_url)
             }.body<WhetherInfo>()
 
             // 取得したデータを UI に反映
@@ -74,9 +77,16 @@ class MainActivity : AppCompatActivity() {
                     R.string.tv_desc,
                     weather[0].description,
                     coordinates.longitude,
-                    coordinates.latitude,
-                    mainContents.temperature,
-                    mainContents.feelsLike
+                    coordinates.latitude
+                )
+                binding.tvWetherMore.text = getString(
+                    R.string.tv_more,
+                    mainContents.temperature -273,
+                    mainContents.feelsLike -273,
+                    mainContents.pressure,
+                    mainContents.humidity,
+                    wind.speed,
+                    wind.windDegrees
                 )
             }
         }
