@@ -50,11 +50,12 @@ private val ktorClient = HttpClient(CIO) {
     }
 }
 
+
 class MainActivity : AppCompatActivity() {
     companion object {
         private const val WEATHER_INFO_URL =
-            "https://api.openweathermap.org/data/2.5/weather?lang=ja"
-        private const val IMAGE_URL = "http://openweathermap.org/img/wn/"
+            "https://api.openweathermap.org/data/2.5/forecast?lang=ja"
+        private const val IMAGE_URL = "https://openweathermap.org/img/wn/"
         private const val IMAGE_FORMAT = ".png"
         private const val APP_ID = BuildConfig.APP_ID
     }
@@ -149,28 +150,27 @@ class MainActivity : AppCompatActivity() {
             }.body<WhetherInfo>()
 
             result.run {
-                //とりあえず緯度経度表示
-                binding.tvCoor.text = getString(R.string.tv_coor, latitude, longitude)
-
-                binding.tvWeatherTelop.text = getString(R.string.tv_telop, cityName)
-                binding.tvWeatherDesc.text = getString(R.string.tv_desc, weather[0].description)
+                binding.tvWeatherTelop.text = getString(R.string.tv_telop, cityInfo.cityName)
+                binding.tvWeatherDesc.text = getString(R.string.tv_desc, hourlyList[0].dateText, hourlyList[0].weather[0].description)
                 binding.tvWetherMore.text = getString(
                     R.string.tv_more,
-                    mainContents.temperature -273,
-                    mainContents.feelsLike -273,
-                    mainContents.pressure,
-                    mainContents.humidity,
-                    wind.speed,
-                    wind.windDegrees
+                    hourlyList[0].mainContents.temperature -273,
+                    hourlyList[0].mainContents.feelsLike -273,
+                    hourlyList[0].mainContents.pressure,
+                    hourlyList[0].mainContents.humidity,
+                    hourlyList[0].wind.speed,
+                    hourlyList[0].wind.gust,
+                    hourlyList[0].wind.windDegrees
                 )
-//
-//                // 天気アイコンのURL
-//                val iconUrl = "$IMAGE_URL${weather[0].icon}$IMAGE_FORMAT"
-//
-//                // Glideを使って画像をロードしてImageViewに表示
-//                Glide.with(this@MainActivity)
-//                    .load(iconUrl)
-//                    .into(binding.ivWeatherIcon)
+
+                // 天気アイコンのURL
+                val iconUrl = "$IMAGE_URL${hourlyList[0].weather[0].icon}$IMAGE_FORMAT"
+
+                // Glideを使って画像をロードしてImageViewに表示
+                Glide.with(this@MainActivity)
+                    .load(iconUrl)
+                    .into(binding.ivWeatherIcon)
+
 
             }
         }
@@ -192,18 +192,26 @@ class MainActivity : AppCompatActivity() {
 
             // 取得したデータを UI に反映
             result.run {
-                binding.tvWeatherTelop.text = getString(R.string.tv_telop, cityName)
-                binding.tvCoor.text = getString(R.string.tv_coor, coordinates.latitude, coordinates.longitude)
-                binding.tvWeatherDesc.text = getString(R.string.tv_desc, weather[0].description)
+                binding.tvWeatherTelop.text = getString(R.string.tv_telop, cityInfo.cityName)
+                binding.tvWeatherDesc.text = getString(R.string.tv_desc,hourlyList[0].dateText ,hourlyList[0].weather[0].description)
                 binding.tvWetherMore.text = getString(
                     R.string.tv_more,
-                    mainContents.temperature -273,
-                    mainContents.feelsLike -273,
-                    mainContents.pressure,
-                    mainContents.humidity,
-                    wind.speed,
-                    wind.windDegrees
+                    hourlyList[0].mainContents.temperature -273,
+                    hourlyList[0].mainContents.feelsLike -273,
+                    hourlyList[0].mainContents.pressure,
+                    hourlyList[0].mainContents.humidity,
+                    hourlyList[0].wind.speed,
+                    hourlyList[0].wind.gust,
+                    hourlyList[0].wind.windDegrees
                 )
+
+                // 天気アイコンのURL
+                val iconUrl = "$IMAGE_URL${hourlyList[0].weather[0].icon}$IMAGE_FORMAT"
+
+                // Glideを使って画像をロードしてImageViewに表示
+                Glide.with(this@MainActivity)
+                    .load(iconUrl)
+                    .into(binding.ivWeatherIcon)
             }
         }
     }
@@ -239,4 +247,5 @@ class MainActivity : AppCompatActivity() {
             )
         )
     }
+
 }

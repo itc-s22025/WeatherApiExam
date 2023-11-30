@@ -5,51 +5,40 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class WhetherInfo (
-    //座標
-    @SerialName("coord") val coordinates: Coordinates,
+    //時間単位のlist
+    @SerialName("list") val hourlyList: List<Hourly>,
 
-    //天気
-    val weather: List<Whether>,
+    //都市情報
+    @SerialName("city") val cityInfo: CityInfo
+)
 
-    //main以下
+@Serializable
+data class Hourly(
+    val dt: Int,
+
     @SerialName("main") val mainContents: MainContents,
 
-    //風情報
+    val weather: List<Weather>,
+
     val wind: Wind,
 
-    //都市ID
+    @SerialName("dt_txt") val dateText: String
+
+)
+
+@Serializable
+data class CityInfo(
     @SerialName("id") val cityId: Int,
 
-    //都市名
     @SerialName("name") val cityName: String,
-)
 
-@Serializable
-data class Coordinates(
-    //経度
-    @SerialName("lon") val longitude: Double,
-
-    //緯度
-    @SerialName("lat") val latitude: Double
-)
-
-@Serializable
-data class Whether(
-    val id: Int,
-
-    @SerialName("main") val groupName: String,
-
-    val description: String,
-
-    val icon: String
+    @SerialName("coord") val coordinates: Coordinates
 )
 
 //main以下(気温・体感気温・気圧・湿度)
 @Serializable
 data class MainContents(
-    //気温
     @SerialName("temp") val temperature: Double,
-
     //体感温度
     @SerialName("feels_like") val feelsLike: Double,
 
@@ -58,10 +47,28 @@ data class MainContents(
     @SerialName("temp_max") val tempMax: Double,
 
     //気圧
-    val pressure: Int,
+    val pressure: Double,
+
+    @SerialName("sea_level") val seaLevel: Int,
+
+    @SerialName("grnd_level") val groundLevel: Int,
 
     //湿度
-    val humidity: Double
+    val humidity: Double,
+
+    @SerialName("temp_kf") val tempKf: Double
+
+)
+
+@Serializable
+data class Weather(
+    val id: Int,
+
+    @SerialName("main") val weatherName: String,
+
+    val description: String,
+
+    val icon: String
 )
 
 //wind以下(風速・風向)
@@ -71,6 +78,19 @@ data class Wind(
     val speed: Double,
 
     //風向
-    @SerialName("deg") val windDegrees: Int
+    @SerialName("deg") val windDegrees: Int,
+
+    //瞬間風速
+    val gust: Double
+
+)
+
+@Serializable
+data class Coordinates(
+    //緯度
+    @SerialName("lat") val latitude: Double,
+    //経度
+    @SerialName("lon") val longitude: Double
+
 
 )
