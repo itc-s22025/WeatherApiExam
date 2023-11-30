@@ -1,9 +1,7 @@
 package jp.ac.it_college.std.s22025.weather_api_exam
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +9,9 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.UiThread
 import androidx.core.content.ContextCompat
-import androidx.core.location.LocationManagerCompat.requestLocationUpdates
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -29,11 +27,9 @@ import io.ktor.client.request.get
 import io.ktor.client.request.url
 import io.ktor.serialization.kotlinx.json.json
 import jp.ac.it_college.std.s22025.weather_api_exam.databinding.ActivityMainBinding
-import jp.ac.it_college.std.s22025.weather_api_exam.model.Coordinates
 import jp.ac.it_college.std.s22025.weather_api_exam.model.WhetherInfo
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import java.net.URLEncoder
 
 private val ktorClient = HttpClient(CIO) {
     engine {
@@ -58,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val WEATHER_INFO_URL =
             "https://api.openweathermap.org/data/2.5/weather?lang=ja"
-        private const val IMAGE_URL = "http://openweathermap.org/img/w/"
+        private const val IMAGE_URL = "http://openweathermap.org/img/wn/"
         private const val IMAGE_FORMAT = ".png"
         private const val APP_ID = BuildConfig.APP_ID
     }
@@ -99,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btSearch.setOnClickListener(::onMapShowCurrentButtonClick)
+        binding.btSearch.setOnClickListener(::onMapSearchButtonClick)
 
 
         //位置情報取得関連
@@ -141,14 +137,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     //btSearchクリック時のイベント
+    //getWeatherInfoと同じことしてるから後でまとめる
     @UiThread
-    private fun onMapShowCurrentButtonClick(view: View) {
+    private fun onMapSearchButtonClick(view: View) {
         lifecycleScope.launch {
 
-            val location_url = "$WEATHER_INFO_URL&lat=$latitude&lon=$longitude&appid=$APP_ID"
+            val locationUrl = "$WEATHER_INFO_URL&lat=$latitude&lon=$longitude&appid=$APP_ID"
 
             val result = ktorClient.get {
-                url(location_url)
+                url(locationUrl)
             }.body<WhetherInfo>()
 
             result.run {
@@ -166,6 +163,15 @@ class MainActivity : AppCompatActivity() {
                     wind.speed,
                     wind.windDegrees
                 )
+//
+//                // 天気アイコンのURL
+//                val iconUrl = "$IMAGE_URL${weather[0].icon}$IMAGE_FORMAT"
+//
+//                // Glideを使って画像をロードしてImageViewに表示
+//                Glide.with(this@MainActivity)
+//                    .load(iconUrl)
+//                    .into(binding.ivWeatherIcon)
+
             }
         }
 
@@ -175,12 +181,12 @@ class MainActivity : AppCompatActivity() {
     private fun getWeatherInfo(q: String){
         lifecycleScope.launch {
             //データ取得
-            val site_url = "$WEATHER_INFO_URL&q=$q&appid=$APP_ID"
+            val siteUrl = "$WEATHER_INFO_URL&q=$q&appid=$APP_ID"
 
             //ktorClient.get{} ->GETリクエストを行うことを定義
             val result = ktorClient.get {
                 //url() ->URLを設定　してリクエスト
-                url(site_url)
+                url(siteUrl)
                 //.body ->取得にトライ
             }.body<WhetherInfo>()
 
@@ -201,6 +207,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 
     //location
     private fun requestLocationUpdates(){
