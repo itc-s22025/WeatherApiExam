@@ -22,7 +22,9 @@ data class Hourly(
 
     val wind: Wind,
 
-    @SerialName("dt_txt") val dateText: String
+    @SerialName("dt_txt") val dateText: String,
+
+    @SerialName("pop") val rainPer: Double
 
 )
 

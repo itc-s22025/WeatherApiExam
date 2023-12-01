@@ -158,6 +158,7 @@ class MainActivity : AppCompatActivity() {
                     hourlyList[0].mainContents.feelsLike -273,
                     hourlyList[0].mainContents.pressure,
                     hourlyList[0].mainContents.humidity,
+                    hourlyList[0].rainPer,
                     hourlyList[0].wind.speed,
                     hourlyList[0].wind.gust,
                     hourlyList[0].wind.windDegrees
@@ -200,6 +201,7 @@ class MainActivity : AppCompatActivity() {
                     hourlyList[0].mainContents.feelsLike -273,
                     hourlyList[0].mainContents.pressure,
                     hourlyList[0].mainContents.humidity,
+                    hourlyList[0].rainPer,
                     hourlyList[0].wind.speed,
                     hourlyList[0].wind.gust,
                     hourlyList[0].wind.windDegrees

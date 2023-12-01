@@ -5,7 +5,7 @@
     <string name="tv_telop">%1$sの天気</string>
     <string name="tv_desc">%1$s時点での天気は%2$sです。</string>
     <string name="tv_more">
-        気温は%1$.2f度で、体感気温は%2$.2f度です。\n気圧は%3$.1fPa,、湿度は%4$.1f％です。\n風速は%5$.2fm/s、瞬間風速は%6$.2fm/sで、風向は%7$o度方向から吹いています。
+        気温は%1$.2f度で、体感気温は%2$.2f度です。\n気圧は%3$.1fPa,、湿度は%4$.1f％、降水確率は%5$.1f％です。\n風速は%6$.2fm/s、瞬間風速は%7$.2fm/sで、風向は%8$o度方向から吹いています。
     </string>
     <string name="tv_time">%1$s</string>
 
